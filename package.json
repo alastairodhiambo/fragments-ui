@@ -1,0 +1,21 @@
+{
+  "name": "fragments-ui",
+  "version": "0.0.1",
+  "description": "Fragments UI testing web app",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alastairodhiambo/fragments-ui.git"
+  },
+  "author": "Alastair Odhiambo",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/alastairodhiambo/fragments-ui/issues"
+  },
+  "homepage": "https://github.com/alastairodhiambo/fragments-ui#readme"
+}
