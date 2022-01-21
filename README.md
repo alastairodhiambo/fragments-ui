@@ -1,2 +1,2 @@
 # fragments-ui
-UI for CCP555 Fragments Microservice
+Fragments UI testing web app
