@@ -1,16 +1,19 @@
-import { Auth, getUser } from './auth';
-import { getUserFragments } from './api';
+import { Auth, getUser } from "./auth";
+import { getUserFragmentData, getUserFragments, postUserFragment } from "./api";
 
 async function init() {
   // Get our UI elements
-  const userSection = document.querySelector('#user');
-  const loginBtn = document.querySelector('#login');
-  const logoutBtn = document.querySelector('#logout');
+  const userSection = document.querySelector("#user");
+  const loginBtn = document.querySelector("#login");
+  const logoutBtn = document.querySelector("#logout");
+  const addFragmentBtn = document.getElementById("add-fragment");
+  const fragmentSection = document.getElementById("fragment-section");
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
     // Sign-in via the Amazon Cognito Hosted UI (requires redirects), see:
     // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
+
     Auth.federatedSignIn();
   };
   logoutBtn.onclick = () => {
@@ -22,24 +25,29 @@ async function init() {
   // See if we're signed in (i.e., we'll have a `user` object)
   const user = await getUser();
   if (!user) {
-      // Disable the Logout button
-      logoutBtn.disabled = true;
-      return;
-    }
-    
+    // Disable the Logout button
+    logoutBtn.disabled = true;
+    fragmentSection.hidden = true;
+    return;
+  }
+
   getUserFragments(user);
   // Log the user info for debugging purposes
   console.log({ user });
+
+  addFragmentBtn.onclick = () => {
+    postUserFragment(user);
+  };
 
   // Update the UI to welcome the user
   userSection.hidden = false;
 
   // Show the user's username
-  userSection.querySelector('.username').innerText = user.username;
+  userSection.querySelector(".username").innerText = user.username;
 
   // Disable the Login button
   loginBtn.disabled = true;
 }
 
 // Wait for the DOM to be ready, then start the app
-addEventListener('DOMContentLoaded', init);
+addEventListener("DOMContentLoaded", init);
