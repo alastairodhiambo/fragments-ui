@@ -2,12 +2,10 @@
   "name": "fragments-ui",
   "version": "0.0.1",
   "description": "Fragments UI testing web app",
-  "engines": {
-    "node": ">=16"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx parcel src/index.html"
+    "start": "npx parcel src/index.html",
+    "build": "npx parcel build src/index.html"
   },
   "repository": {
     "type": "git",

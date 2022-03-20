@@ -1,0 +1,16 @@
+# .dockerignore
+
+# ignore the dependencies
+node_modules/
+# ignore the build and cache directories
+.parcel-cache/
+dist/
+# dev tools, config
+.vscode/
+.prettier*
+.git/
+.github/
+.git*
+*.md
+# Include the license so we don't break the license/copyright
+!LICENSE.md
