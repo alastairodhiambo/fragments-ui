@@ -1,13 +1,29 @@
 import { Auth, getUser } from "./auth";
-import { getUserFragmentData, getUserFragments, postUserFragment } from "./api";
+import {
+  getFragmentData,
+  getFragmentMetadata,
+  getUserFragments,
+  getUserFragmentsExpanded,
+  postUserFragment,
+} from "./api";
+
+const dragDrop = require("drag-drop");
 
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector("#user");
   const loginBtn = document.querySelector("#login");
   const logoutBtn = document.querySelector("#logout");
-  const addFragmentBtn = document.getElementById("add-fragment");
-  const fragmentSection = document.getElementById("fragment-section");
+  const fragmentSection = document.querySelector("#fragment-section");
+  const getUserFragmentsBtn = document.querySelector("#get-user-fragments");
+  const getUserFragmentsExpandedBtn = document.querySelector(
+    "#get-user-fragments-expanded"
+  );
+  const getFragmentDataBtn = document.querySelector("#get-fragment-data");
+  const getFragmentMetadataBtn = document.querySelector(
+    "#get-fragment-metadata"
+  );
+  const addFragmentBtn = document.querySelector("#add-fragment");
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -27,17 +43,12 @@ async function init() {
   if (!user) {
     // Disable the Logout button
     logoutBtn.disabled = true;
-    fragmentSection.hidden = true;
     return;
   }
 
-  getUserFragments(user);
+  getUserFragmentsExpanded(user);
   // Log the user info for debugging purposes
   console.log({ user });
-
-  addFragmentBtn.onclick = () => {
-    postUserFragment(user);
-  };
 
   // Update the UI to welcome the user
   userSection.hidden = false;
@@ -47,6 +58,70 @@ async function init() {
 
   // Disable the Login button
   loginBtn.disabled = true;
+  fragmentSection.hidden = false;
+
+  // ========= Drag and Drop
+
+  let fileData;
+
+  dragDrop("#dropTarget", (files) => {
+    // `files` is an Array!
+    files.forEach((file) => {
+      // convert the file to a Buffer that we can use!
+      const reader = new FileReader();
+      reader.addEventListener("load", (e) => {
+        // e.target.result is an ArrayBuffer
+        const arr = new Uint8Array(e.target.result);
+        const buffer = new Buffer(arr);
+
+        fileData = { buffer, file };
+      });
+      reader.addEventListener("error", (err) => {
+        console.error("FileReader error" + err);
+      });
+      reader.readAsArrayBuffer(file);
+
+      document.getElementById("dropTarget").textContent = file.name;
+
+      let contentType = file.type;
+      if (contentType === "" && file.name.includes(".md")) {
+        contentType = "text/markdown";
+      }
+
+      document.getElementById("fragment-type").value = contentType;
+    });
+  });
+
+  // =======================
+
+  // Get User's fragments
+  getUserFragmentsBtn.onclick = () => {
+    getUserFragments(user);
+  };
+
+  // Get User's fragments expanded
+  getUserFragmentsExpandedBtn.onclick = () => {
+    getUserFragmentsExpanded(user);
+  };
+
+  // Get fragment data by ID
+  getFragmentDataBtn.onclick = () => {
+    const id = document.getElementById("fragment-id").value;
+    getFragmentData(user, id);
+  };
+
+  // Get fragment metadata by ID
+  getFragmentMetadataBtn.onclick = () => {
+    const id = document.getElementById("fragment-id").value;
+    getFragmentMetadata(user, id);
+  };
+
+  // Post the User's fragment
+  addFragmentBtn.onclick = () => {
+    console.log("Adding User Fragment");
+    console.log("fileData", fileData);
+    postUserFragment(user, fileData);
+  };
 }
 
 // Wait for the DOM to be ready, then start the app

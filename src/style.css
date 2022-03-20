@@ -1,0 +1,26 @@
+.add-fragment-container {
+  margin-top: 50px;
+}
+
+#dropTarget {
+  height: 50px;
+  max-width: 300px;
+
+  border: 1px solid black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#add-fragment {
+  margin-top: 10px;
+}
+
+.fragment-id-container {
+  margin-top: 10px;
+}
+
+#get-fragment-data {
+  margin-top: 10px;
+}

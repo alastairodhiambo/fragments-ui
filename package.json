@@ -21,6 +21,7 @@
     "parcel": "^2.2.1"
   },
   "dependencies": {
-    "aws-amplify": "^4.3.12"
+    "aws-amplify": "^4.3.12",
+    "drag-drop": "^7.2.0"
   }
 }
