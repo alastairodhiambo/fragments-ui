@@ -3,7 +3,6 @@ import {
   getFragmentData,
   getFragmentMetadata,
   getUserFragments,
-  getUserFragmentsExpanded,
   postUserFragment,
 } from "./api";
 
@@ -46,7 +45,7 @@ async function init() {
     return;
   }
 
-  getUserFragmentsExpanded(user);
+  getUserFragments(user, true);
   // Log the user info for debugging purposes
   console.log({ user });
 
@@ -101,7 +100,7 @@ async function init() {
 
   // Get User's fragments expanded
   getUserFragmentsExpandedBtn.onclick = () => {
-    getUserFragmentsExpanded(user);
+    getUserFragments(user, true);
   };
 
   // Get fragment data by ID
