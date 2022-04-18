@@ -25,21 +25,24 @@
         Get User Fragments Expanded
       </button>
 
-     
-
       <div class="add-fragment-container">
-        <h3>POST Fragment:</h3>
+        <h3>POST or PUT Fragment:</h3>
 
         <div id="dropTarget">Drag Here</div>
 
         <label for="fragment-type">Fragment Type:</label>
-        <input type="text" id="fragment-type" name="fragment-type" size="32" />
+        <input type="text" id="fragment-type" name="fragment-type" size="40" />
+        <br />
+        <label for="fragment-id"
+          >Fragment ID (if ID provided, will be PUT Request):</label
+        >
+        <input type="text" id="fragment-id" name="fragment-id" size="40" />
         <br />
         <button id="add-fragment">Submit</button>
       </div>
 
       <div class="fragment-id-container">
-        <h3>GET Fragment by ID:</h3>
+        <h3>GET or DELETE Fragment by ID:</h3>
         <p>Copy the ID of the desired fragment into the textbox below</p>
 
         <label for="fragment-id">Fragment ID:</label>
@@ -47,6 +50,7 @@
         <br />
         <button id="get-fragment-data">Get Fragment Data</button>
         <button id="get-fragment-metadata">Get Fragment Metadata</button>
+        <button id="delete-fragment">DELETE Fragment</button>
       </div>
     </section>
     <section id="view-section"></section>

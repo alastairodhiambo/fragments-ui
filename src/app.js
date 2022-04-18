@@ -4,6 +4,8 @@ import {
   getFragmentMetadata,
   getUserFragments,
   postUserFragment,
+  putFragment,
+  deleteFragment,
 } from "./api";
 
 const dragDrop = require("drag-drop");
@@ -23,6 +25,7 @@ async function init() {
     "#get-fragment-metadata"
   );
   const addFragmentBtn = document.querySelector("#add-fragment");
+  const deleteFragmentBtn = document.querySelector("#delete-fragment");
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -103,6 +106,13 @@ async function init() {
     getUserFragments(user, true);
   };
 
+  // Delete fragment by ID
+  deleteFragmentBtn.onclick = () => {
+    console.log("click");
+    const id = document.getElementById("fragment-id").value;
+    deleteFragment(user, id);
+  };
+
   // Get fragment data by ID
   getFragmentDataBtn.onclick = () => {
     const id = document.getElementById("fragment-id").value;
@@ -115,11 +125,17 @@ async function init() {
     getFragmentMetadata(user, id);
   };
 
-  // Post the User's fragment
+  // Post or Put the User's fragment
   addFragmentBtn.onclick = () => {
-    console.log("Adding User Fragment");
+    const id = document.getElementById("fragment-id").value;
+    if (id.length === 0) {
+      console.log("Adding User Fragment");
+      postUserFragment(user, fileData);
+    } else {
+      console.log("Updating User Fragment");
+      putFragment(user, id, fileData);
+    }
     console.log("fileData", fileData);
-    postUserFragment(user, fileData);
   };
 }
 
