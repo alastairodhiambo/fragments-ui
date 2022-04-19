@@ -127,7 +127,7 @@ async function init() {
 
   // Post or Put the User's fragment
   addFragmentBtn.onclick = () => {
-    const id = document.getElementById("fragment-id").value;
+    const id = document.getElementById("put-fragment-id").value;
     if (id.length === 0) {
       console.log("Adding User Fragment");
       postUserFragment(user, fileData);
